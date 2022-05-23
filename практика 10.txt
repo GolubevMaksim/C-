@@ -1,39 +1,48 @@
 №1
 #include <iostream>
+#include <vector>
+#include <list>
 using namespace std;
-class matrix
-{
-private:
-    int mat[3][3];
-    int l,c;
+
+class Student{
 public:
-    void getdate()
-    {
+    string name;
+    string surname;
+    string lecture_hall;
 
-        for (int i=0; i<5; i++)
-            for (int j=0; j<5; j++)
-                mat[i][j]=rand() %10;
-    };
-    void putdate()
-    {
-        cout << "Kol-vi linii:\n";
-        cin >> l;
-        cout << "Kol-vo stolbcov:\n";
-        cin >> c;
-        for (int i=0; i<l; i++)
-        {
-            for (int j=0; j<c; j++)
-                cout<<mat[i][j]<<" ";
-            cout<<endl;}
-    };
+    Student(string n, string s, string m){
+        name = n;
+        surname = s;
+        lecture_hall = m;
 
+    };
 };
-int main()
-{
-    matrix mat;
-    mat.getdate();
-    mat.putdate();
+class Teacher: public Student{
+public:
+    list<Student*> group;
+    short rank;
+    Teacher(string n1, string s1, string m1) : Student(n1, s1, m1) {
+        name = n1;
+        surname = s1;
+        lecture_hall = m1;
 
+    };
+    Teacher& visit_card(){
+        cout << "Surname: " << surname << endl;
+        cout << "Name: " << name << endl;
+        cout << "Lecture hall: " << lecture_hall << endl;
+        cout << "Rank: " << rank << endl;
+    }
+};
+int main(){
+    Teacher Ilya(  "Ilya", "Kolokolnikov","249");
+    Student Max( "Maxim", "Kuzmin", "248");
+    Student Dan( "Dan", "Schevchenko", "247");
+
+    Ilya.group.push_back(&Max);
+    Ilya.group.push_back(&Dan);
+    Student* adress = &Max;
+    Student frt1 = *adress; // frt1 = *&frt
     return 0;
 }
 
@@ -43,79 +52,51 @@ int main()
 
 
 №2
-#include "iostream"
+#include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
-int main()
-{
-    int l, c, a[10][10], b[10][10], sum[10][10], i, j;
-    cout << "Kol-vo linii:\n";
-    cin >> l; 
-    cout << "Kol-vo stolbcov:\n";
-    cin >> c;
-    cout << endl << "Kol-vo elementov pervoi matr: " << endl;
 
-    for(i = 0; i < l; ++i)
-        for(j = 0; j < c; ++j)
-        {
-            cout << "Element a" << i + 1 << j + 1 << ": ";
-            cin >> a[i][j];
-        }
+class Point{
+public:
+    int x, y, z;
+    Point(){
+        x = y = z = 0;
+    }
+    Point (int x, int y, int z){
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+    void Print (){
+        cout << "X:"<< x<< "Y:"<< y<< "Z:"<< z << endl;
+    }
+};
+int main (){
+    string path = "testing.txt";
+    Point point (10, 20, 50);
+    ofstream fout;
+    fout.open(path, ofstream::app);
 
-    cout << endl << "Kol-vo elementov vtoroi matr: " << endl;
-    for(i = 0; i < l; ++i)
-        for(j = 0; j < c; ++j)
-        {
-            cout << "Element b" << i + 1 << j + 1 << ": ";
-            cin >> b[i][j]; }
-            for(i = 0; i < l; ++i)
-                for(j = 0; j < c; ++j) sum[i][j] = a[i][j] + b[i][j];
-            cout << endl << "Summa matr: " << endl;
-            for(i = 0; i < l; ++i)
-                for(j = 0; j < c; ++j)
-                {
-                    cout << sum[i][j] << " ";
-                    if(j == c - 1) cout << endl;
-                }
-            return 0;
+        fout.write((char *) &point, sizeof(Point));
+    fout.close();
+    return 0;
 }
-
 
 
 
 
 №3
-#include "iostream"
+#include <iostream>
 using namespace std;
 int main()
 {
-    int l, c, a[10][10], b[10][10], i, j;
-    cout << "Kol-vo linii:\n";
-    cin >> l;
-    cout << "Kol-vo stolbcov:\n";
-    cin >> c;
-    cout << endl << "Kol-vo elemetnov pervoi matr: " << endl;
+    const int n = ; // размер массива
+    int a[n] = {}; // сам массив
+    for (int i = 0; i < n; i++)
 
-    for(i = 0; i < l; ++i)
-        for(j = 0; j < c; ++j)
-        {
-            cout << "element a" << i + 1 << j + 1 << ": ";
-            cin >> a[i][j];
-
-        }
-    for(i = 0; i < l; ++i){
-        for(j = 0; j < c; ++j)
-            cout << a[i][j] << " ";
+    {
+        cout << *(a+i) << endl;
     }
-
-    for(i = 0; i < l; ++i){
-        for(j = 0; j < c; ++j)
-            b[i][j] = a[j][i];
-        }
-    for(i = 0; i < l; ++i){
-        for(j = 0; j < c; ++j)
-            cout << b[i][j] << " ";
-    }
-    
-            return 0;
+    return 0;
 }
-
